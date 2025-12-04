@@ -17,6 +17,7 @@
         add-graph(
           t => ((2 + 2 * calc.cos(t)) * calc.cos(t), (2 + 2 * calc.cos(t)) * calc.sin(t)),
           domain: (0, 2 * calc.pi),
+          samples: 2000,
         )
       },
     )
@@ -38,6 +39,7 @@
         add-graph(
           t => (calc.cos(2 * t) * calc.cos(t), calc.cos(2 * t) * calc.sin(t)),
           domain: (0, 2 * calc.pi),
+          samples: 2000,
         )
       },
     )
@@ -69,6 +71,7 @@
         add-graph(
           t => ((1 + 2 * calc.cos(t)) * calc.cos(t), (1 + 2 * calc.cos(t)) * calc.sin(t)),
           domain: (0, 2 * calc.pi),
+          samples: 2000,
         )
       },
     )
@@ -88,6 +91,7 @@
           calc.sqrt(calc.abs(calc.cos(2 * t))) * calc.sin(t),
         ),
         domain: (0, 2 * calc.pi),
+        samples: 2000,
       )
     },
   )

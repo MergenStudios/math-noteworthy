@@ -247,6 +247,7 @@ How can we remove $x y$ term? By rotational transform! \
           type: "implicit",
           domain: (-1.6, 1.6),
           y-domain: (-1.6, 1.6),
+          samples: 300,
         )
         add-xy-axes(calc.atan(3 / 4), 1.5)
       },

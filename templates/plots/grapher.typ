@@ -26,7 +26,7 @@
   type: "y=x",
   domain: auto,
   y-domain: (-5, 5),
-  samples: render-sample-count,
+  samples: auto,
   label: none,
   style: (:),
 ) = {
@@ -39,8 +39,17 @@
   let base-color = if "stroke" in style { style.stroke } else { highlight-col }
   let final-style = (stroke: base-color) + style
 
+  // Determine effective sample count
+  let effective-samples = if samples != auto {
+    samples
+  } else if type == "implicit" {
+    render-implicit-samples
+  } else {
+    render-sample-count
+  }
+
   let common-args = (
-    samples: samples,
+    samples: effective-samples,
     style: final-style,
   )
 
@@ -75,28 +84,14 @@
       t => (func(t) * calc.cos(t), func(t) * calc.sin(t)),
     )
   } else if type == "implicit" {
-    // Implicit: f(x, y) = 0 (uses quadratic memory: samples²)
+    // Implicit Equation: f(x, y) = 0
     let x-dom = if domain == auto { (-5, 5) } else { domain }
-
-    // Adaptive scaling for large domains
-    let domain-width = calc.abs(x-dom.at(1) - x-dom.at(0))
-    let domain-height = calc.abs(y-domain.at(1) - y-domain.at(0))
-    let domain-area = domain-width * domain-height
-    let scale-factor = if domain-area > 100 {
-      calc.sqrt(100 / domain-area)
-    } else {
-      1.0
-    }
-
-    let safe-samples = calc.floor(render-implicit-samples * scale-factor)
-    let x-samp = calc.max(50, calc.min(safe-samples, 300))
-    let y-samp = calc.max(50, calc.min(safe-samples, 300))
 
     plot.add-contour(
       x-domain: x-dom,
       y-domain: y-domain,
-      x-samples: x-samp,
-      y-samples: y-samp,
+      x-samples: effective-samples,
+      y-samples: effective-samples,
       z: 0,
       fill: false,
       style: final-style,

@@ -13,6 +13,13 @@
 #import "@preview/cetz:0.4.2"
 #import "@preview/cetz:0.4.2": *
 #import "@preview/cetz-plot:0.1.3": plot
+#let add-graph(..args) = {
+  let kwargs = args.named()
+  if "samples" not in kwargs {
+    kwargs.insert("samples", render-sample-count)
+  }
+  plot.add(..args.pos(), ..kwargs)
+}
 
 // Re-export cetz module for content files
 #import "@preview/cetz:0.4.2" as cetz-mod
@@ -56,12 +63,6 @@
 #let add-right-angle = geoplot.add-right-angle.with(theme: active-theme)
 #let add-xy-axes = geoplot.add-xy-axes
 #let add-polygon = geoplot.add-polygon.with(theme: active-theme)
-
-// Wrapper for plot.add with config-based default samples
-#let add-graph(func, domain: auto, samples: render-sample-count, ..args) = {
-  plot.add(func, domain: domain, samples: samples, ..args)
-}
-
 
 
 #let draw-boxes = combiplot.draw-boxes.with(theme: active-theme)

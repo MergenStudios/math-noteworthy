@@ -46,7 +46,7 @@
 #let render-implicit-samples = if draft-mode {
   200
 } else {
-  2000
+  400
 }
 
 #let display-mode = "rose-pine" //lower / upper case is ignored
